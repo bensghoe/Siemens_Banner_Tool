@@ -1,4 +1,26 @@
 <!DOCTYPE html>
-<html>
-    Hello Siemens
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Meme Generator</title>
+        <link rel="stylesheet" href="Styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <p>
+            <textarea id="top-text"></textarea>
+            <!-- Text size: <input type="range" id="top-text-size-input" min="0.02" max="0.05" value="0.04" step="0.01"> -->
+        </p>
+        <p>
+            <textarea id="bottom-text"></textarea>
+            <!-- Text size: <input type="range" id="bottom-text-size-input" min="0.02" max="0.05" value="0.04" step="0.01"> -->
+        </p>
+        <p>
+            <button id="generate-btn">Generate!</button>
+        </p>
+        <p>
+            <canvas id="banner-canvas" title="Right click -> &quot;Save image as...&quot;"></canvas>
+        </p>
+        <script src="Banner_Tool/main.js"></script>
+    </body>
 </html>
