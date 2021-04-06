@@ -2,8 +2,16 @@ let fullName, sideText, fullNameSizeInput, sideTextSizeInput, imageInput, genera
 
 function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck){
     // Size canvas to image
-    canvas.width = "792";
-    canvas.height = "198";
+    canvas.width = 792;
+    canvas.height = 198;
+
+    // Size Siemens Logo
+    imgLogo.width = 160;
+    imgLogo.height = 60;
+
+    // Size convergeLogo
+    convergeLogo.width = 140;
+    convergeLogo.height = 41;
  
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -12,15 +20,15 @@ function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, prof
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
     // Draw Logo
-    ctx.drawImage(imgLogo, canvas.width - 172, 12, 160, 60);
+    ctx.drawImage(imgLogo, canvas.width - (imgLogo.width + 12), 12, imgLogo.width, imgLogo.height);
 
     // Draw converge logo if requested
     if(convergeLogoCheck == true){
-        ctx.drawImage(convergeLogo, canvas.width - 140, canvas.height - 40, 140, 41);
+        ctx.drawImage(convergeLogo, canvas.width - convergeLogo.width, canvas.height - convergeLogo.height, convergeLogo.width, convergeLogo.height);
     }
 
     // Grab Profile Image
-    if(profileImg != null && profilePicCheck == true){
+    if(profileImg.value != '' && profilePicCheck == true){
         var reader = new FileReader();
         reader.onload = function(){
             profileImgReader = new Image;
@@ -92,39 +100,7 @@ function insertText(canvas, fullName, awardTitle, sideText){
     }
 }
 
-function generateBanner (img, imgLogo, convergeLogo) {
-    //Grab html variables
-    fullName = document.getElementById('firstname').value + " " + document.getElementById('lastname').value;
-    awardTitle = document.getElementById('award').value;
-    sideText = document.getElementById('addtext').value;
-    convergeLogoCheck = document.getElementById('convergelogo').checked;
-    downloadBtn = document.getElementById('download-btn');
-    profileImg = document.getElementById('profileinput');
-    profilePicCheck = document.getElementById('profilepic').checked;
-
-    //Draw canvas w/ images
-    drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
-
-    insertText(canvas, fullName, awardTitle, sideText);
-
-    //Download Button
-    if(downloadBtn.style = "none"){
-        downloadBtn.style = "block";
-    }
-    $("#download-btn").click(function () {
-        // img.crossOrigin = 'anonymous';
-        // imgLogo.crossOrigin = 'anonymous';
-        // convergeLogo.crossOrigin = 'anonymous';
-        canvas.toDataURL("image/pgn");
-    });
-}
-
-function init () {
-    // Initialize variables
-    canvas = document.getElementById('banner-canvas');
-    ctx = canvas.getContext('2d');
-    canvas.width = canvas.height = 0;
-
+function generateBanner () {
     // Converge Logo
     let convergeLogo = new Image;
     convergeLogo.src = "C:\\Users\\g8uqyr\\Documents\\siemensConvergeLogo.jpg"
@@ -133,16 +109,51 @@ function init () {
     let imgLogo = new Image;
     imgLogo.src = "C:\\Users\\g8uqyr\\Documents\\siemensLogo.jpg"
 
-    let imgbackground = new Image;
-    imgbackground.src = "C:\\Users\\g8uqyr\\Documents\\SiemensBackground3.jpg";
+    //Background
+    let img = new Image;
+    img.src = "C:\\Users\\g8uqyr\\Documents\\SiemensBackground3.jpg";
+    
+    img.onload = function(){
+        //Grab html variables
+        fullName = document.getElementById('firstname').value + " " + document.getElementById('lastname').value;
+        awardTitle = document.getElementById('award').value;
+        sideText = document.getElementById('addtext').value;
+        convergeLogoCheck = document.getElementById('convergelogo').checked;
+        downloadBtn = document.getElementById('download-btn');
+        profileImg = document.getElementById('profileinput');
+        profilePicCheck = document.getElementById('profilepic').checked;
+
+        //Draw canvas w/ images
+        drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
+
+        insertText(canvas, fullName, awardTitle, sideText);
+
+        //Download Button
+        if(downloadBtn.style = "none"){
+            downloadBtn.style = "block";
+        }
+        $("#download-btn").click(function () {
+            // img.crossOrigin = 'anonymous';
+            // imgLogo.crossOrigin = 'anonymous';
+            // convergeLogo.crossOrigin = 'anonymous';
+            canvas.toDataURL("image/pgn");
+        });
+    }
+}
+
+function init () {
+    // Initialize variables
+    canvas = document.getElementById('banner-canvas');
+    ctx = canvas.getContext('2d');
+    canvas.width = canvas.height = 0;
 
     // Banner generation
     generateBtn = document.getElementById('generate-btn');
     window.onload = function(){
-        generateBanner(imgbackground, imgLogo, convergeLogo);
+        generateBanner();
     }
     $("#generate-btn").click(function () {
-        generateBanner(imgbackground, imgLogo, convergeLogo);
+        generateBanner();
     });
 }
 
@@ -156,6 +167,7 @@ var addprofileinput = document.getElementById('profilepicinput')
     }else{
         addprofileinput.style.display= "none";
     }
+    generateBanner();
 }
 
 // //Evenlistner to not have the browser do the validation

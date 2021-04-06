@@ -29,7 +29,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="firstname">First Name</label>
-                                <input type="text" name="firstname" id="firstname" class="form-control is-invalid" required>
+                                <input type="text" name="firstname" onchange='generateBanner()' id="firstname" class="form-control is-invalid" required>
                                 <div class="invalid-feedback"> Please enter a First Name</div>
                             </div>
                             
@@ -40,7 +40,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="lastname">Last Name</label>
-                                <input type="text" name="lastname" id="lastname" class="form-control is-invalid" required>
+                                <input type="text" name="lastname" onchange='generateBanner()' id="lastname" class="form-control is-invalid" required>
                                 <div class="invalid-feedback"> Please enter a Last Name</div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="typeofawards">Select The type of Award</label>
-                                <select name="award" id="award" class="form-control is-invalid" required>
+                                <select name="award" id="award" onchange='generateBanner()' class="form-control is-invalid" required>
                                     <option value="Excellence in Resource Team Contribution">Excellence in Resource Team
                                         Contribution
                                     </option>
@@ -65,7 +65,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="addtext">Additional Text</label>
-                                <textarea name="addtext" id="addtext" class="form-control"></textarea> 
+                                <textarea name="addtext" onchange='generateBanner()' id="addtext" class="form-control"></textarea> 
                                 <small class="form-text text-muted">
                                     3 Rows Max
                                 </small>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" id="convergelogo" class="form-check-input">
+                        <input type="checkbox" id="convergelogo" onchange='generateBanner()' class="form-check-input">
                         <label for="convergelogo" class="form-check-label">Add Converge logo</label>
                         <small class="form-text text-muted">
                             Optional
@@ -81,11 +81,11 @@
                         <br/>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" id="profilepic" class="form-check-input" name="profilepic" onchange= 'profilepicfunction()'>
+                        <input type="checkbox" id="profilepic" class="form-check-input" name="profilepic" onchange= 'profilepicfunction();'>
                         <label for="profilepic" class="form-check-label">Add profile pic</label>
                         <div id = "profilepicinput" style="display:none;">
                             <label for="addtext"> Choose a picture for the profile </label>
-                            <input type="file" id="profileinput" accept="image/*" name="profileinput" >
+                            <input type="file" id="profileinput" accept="image/*" name="profileinput" onchange='generateBanner()' >
                         </div>
                     </div>
                     <br/>
