@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Simens Banner Tool</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1 class="text-center">Siemens Banner Tool</h1>
+
+    <form action="" class="main-form needs-validation" novalidate>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    <input type="text" name="firstname" id="firstname" class="form-control is-invalid" required>
+                    <div class="invalid-feedback"> Please enter a First Name</div>
+                </div>
+                
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" name="lastname" id="lastname" class="form-control is-invalid" required>
+                    <div class="invalid-feedback"> Please enter a Last Name</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col">
+                <div class="form-group">
+                    <label for="typeofawards">Select The type of Award</label>
+                    <select name="award" id="award" class="form-control is-invalid" required>
+                        <option value="Excellence in Resource Team Contribution">Excellence in Resource Team
+                            Contribution
+                        </option>
+                        <option value="Top Services Contributor">Top Services Contributor</option>
+                        <option value="Excellence in Project Execution">Excellence in Project Execution</option>
+                    </select>
+                    <div class="invalid-feedback">Please Select an Award</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="addtext">Additional Text</label>
+                    <input type="text" name="addtext" id="addtext" class="form-control">
+                    <small class="form-text text-muted">
+                        Only 10 Elements
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" id="convergelogo" class="form-check-input">
+            <label for="convergelogo" class="form-check-label">Add Converge logo</label>
+            <small class="form-text text-muted">
+                Optional
+            </small>
+            <br/>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" id="profilepic" class="form-check-input" name="profilepic" onchange= 'profilepicfunction()' >
+            <label for="profilepic" class="form-check-label">Add profile picture </label>
+            
+        
+            <div id = "profilepicinput">
+                <label for="addtext"> Choose a picture for the profile </label>
+                <input type="file" id="profileinput" accept="image/*" name="profileinput" >
+            </div>
+        </div>
+        <br/>
+        <div class=" choosefile form-control" required>
+            <label for="addtext"> Please Choose a file for the background banner</label>
+            <input type="file" id="background-input" accept="image/*">
+            
+        </div>
+       <br/>
+       <div class="submitbtn form-control" >
+        <button Type="submit" class="btn btn-primary"> Preview </button>
+        </div>
+        <div class="submitbtn form-control" >
+        <button Type="submit" class="btn btn-primary" id= "generate"> Generate - Download </button>
+        </div>
+        
+    </div>
+    </form>
+
+    <!-- <p>
+        <textarea id="top-text"></textarea>
+        Text size: <input type="range" id="top-text-size-input" min="0.05" max="0.25" value="0.15" step="0.01">
+    </p>
+    <p>
+        <textarea id="bottom-text"></textarea>
+        Text size: <input type="range" id="bottom-text-size-input" min="0.05" max="0.25" value="0.15" step="0.01">
+    </p>
+    
+    <p>
+        <button id="generate-btn">Generate!</button>
+    </p>
+    <p>
+        <canvas id="meme-canvas" title="Right click -> &quot;Save image as...&quot;"></canvas>
+    </p> -->
+    <script src="Banner_Tool/main.js"></script>
+
+</body>
+
+</html>
