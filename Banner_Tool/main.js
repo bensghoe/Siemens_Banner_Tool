@@ -1,6 +1,6 @@
 let fullName, sideText, fullNameSizeInput, sideTextSizeInput, imageInput, generateBtn, canvas, ctx;
 
-function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck){
+function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck){
     // Size canvas to image
     canvas.width = "792";
     canvas.height = "198";
@@ -18,21 +18,34 @@ function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck){
     if(convergeLogoCheck == true){
         ctx.drawImage(convergeLogo, canvas.width - 140, canvas.height - 40, 140, 41);
     }
-    /* if(profileImg != ""){
-        if(profileImg.width > 200 || profileImg.height > 100){
-            if(profileImg.width > profileImg.height){
-                var profileWidthOld = profileImg.width;
-                profileImg.width = 200;
-                profileImg.height = profileImg.height * profileImg.width / profileWidthOld;
-            }
-            else{
-                var profileHeightOld = profileImg.height;
-                profileImg.height = 100;
-                profileImg.width = profileImg.width * profileImg.height / profileHeightOld;
-            }
+
+    // Grab Profile Image
+    if(profileImg != null && profilePicCheck == true){
+        var reader = new FileReader();
+        reader.onload = function(){
+            profileImgReader = new Image;
+            profileImgReader.src = reader.result;
+            profileImgReader.addEventListener("load", () => {
+                // Resize picture to fit canvas
+                if(profileImgReader.width > 150 || profileImgReader.height > 130){
+                    if(profileImgReader.width > profileImgReader.height){
+                        var profileWidthOld = profileImgReader.width;
+                        profileImgReader.width = 150;
+                        profileImgReader.height = profileImgReader.height * profileImgReader.width / profileWidthOld;
+                    }
+                    else{
+                        var profileHeightOld = profileImgReader.height;
+                        profileImgReader.height = 130;
+                        profileImgReader.width = profileImgReader.width * profileImgReader.height / profileHeightOld;
+                    }
+                }
+                // Draw Image
+                ctx.drawImage(profileImgReader, canvas.width / 12, canvas.height / 4, profileImgReader.width, profileImgReader.height);
+            });
         }
-        ctx.drawImage(profileImg, canvas.width/5, canvas.height / 2);
-    } */
+        // Load reader file
+        reader.readAsDataURL(profileImg.files[0]);
+    }
 }
 
 function insertText(canvas, fullName, awardTitle, sideText){
@@ -86,10 +99,11 @@ function generateBanner (img, imgLogo, convergeLogo) {
     sideText = document.getElementById('addtext').value;
     convergeLogoCheck = document.getElementById('convergelogo').checked;
     downloadBtn = document.getElementById('download-btn');
-    //profileImg = document.getElementById('profileInput')
+    profileImg = document.getElementById('profileinput');
+    profilePicCheck = document.getElementById('profilepic').checked;
 
     //Draw canvas w/ images
-    drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck);
+    drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
 
     insertText(canvas, fullName, awardTitle, sideText);
 
@@ -119,15 +133,40 @@ function init () {
     let imgLogo = new Image;
     imgLogo.src = "C:\\Users\\g8uqyr\\Documents\\siemensLogo.jpg"
 
+    let imgbackground = new Image;
+    imgbackground.src = "C:\\Users\\g8uqyr\\Documents\\SiemensBackground3.jpg";
+
     // Banner generation
     generateBtn = document.getElementById('generate-btn');
+    window.onload = function(){
+        generateBanner(imgbackground, imgLogo, convergeLogo);
+    }
     $("#generate-btn").click(function () {
-        let imgbackground = new Image;
-        imgbackground.src = "C:\\Users\\g8uqyr\\Documents\\SiemensBackground3.jpg";
-        imgbackground.onload = function(){
-            generateBanner(imgbackground, imgLogo, convergeLogo);
-        }
+        generateBanner(imgbackground, imgLogo, convergeLogo);
     });
 }
+
+//Display the "choose file" for the profile picture checked
+function profilepicfunction() {
+var checkprofilepic = document.getElementById('profilepic')
+var addprofileinput = document.getElementById('profilepicinput')
+
+    if (checkprofilepic.checked == true){
+        addprofileinput.style.display="block";
+    }else{
+        addprofileinput.style.display= "none";
+    }
+}
+
+// //Evenlistner to not have the browser do the validation
+// form.addEventListener('submit', function (event) {
+//     if (form.checkValidity() == false) {
+//         // No request can be sent
+//         event.preventDefault();
+//         // When you are not sending the datawith an ajax request
+//         event.stopPropagation();
+//     }
+//     form.classList.add('was-validated')
+// })
 
 init();
