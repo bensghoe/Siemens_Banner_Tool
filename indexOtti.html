@@ -53,6 +53,7 @@
                             <div class="form-group">
                                 <label for="typeofawards">Select The type of Award</label>
                                 <select name="award" id="award" onchange='generateBanner()' class="form-control is-invalid" required>
+                                    <option>Siemens</option>
                                     <option value="Excellence in Resource Team Contribution">Excellence in Resource Team
                                         Contribution
                                     </option>
@@ -65,7 +66,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="addtext">Additional Text</label>
-                                <textarea name="addtext" onchange='generateBanner()' id="addtext" class="form-control"></textarea> 
+                                <textarea name="addtext" onchange='generateBanner()' id="addtext" wrap="hard" class="form-control"></textarea> 
                                 <small class="form-text text-muted">
                                     3 Rows Max
                                 </small>
@@ -96,10 +97,7 @@
                     </div> -->
                 <br/>
                     <div class="submitbtn form-control" >
-                        <button id="generate-btn" class="btn btn-primary" type='button'> Preview </button>
-                    </div>
-                    <div class=" form-control" >
-                        <button id="download-btn" type='button'>Download</button>
+                        <a id="generate-btn" download='myBanner.png' class="btn btn-primary" href='' onclick='downloadImg(this);' type='button'> Download </a>
                     </div>
                 </div>
                 </form>

@@ -57,3 +57,7 @@ body{
     .submitbtn{
         border: none;
     }
+
+    #addtext{
+        width:280px;
+    }
