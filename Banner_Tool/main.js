@@ -10,8 +10,8 @@ function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, prof
     imgLogo.height = 60;
 
     // Size convergeLogo
-    convergeLogo.width = 200;
-    convergeLogo.height = 59;
+    convergeLogo.width = 160;
+    convergeLogo.height = 60;
  
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -24,7 +24,7 @@ function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, prof
 
     // Draw converge logo if requested
     if(convergeLogoCheck == true){
-        ctx.drawImage(convergeLogo, canvas.width - convergeLogo.width, canvas.height - convergeLogo.height, convergeLogo.width, convergeLogo.height);
+        ctx.drawImage(convergeLogo, canvas.width - (convergeLogo.width + 12), canvas.height - (convergeLogo.height + 12), convergeLogo.width, convergeLogo.height);
     }
 
     // Canvas height - award font
@@ -122,23 +122,40 @@ function generateBanner () {
     let imgLogo = new Image;
     imgLogo.src = ".\\imgs\\siemensLogo.jpg"
 
-    //Background
-    let img = new Image;
-    img.src = ".\\imgs\\SiemensBackground3.jpg";
-    
-    img.onload = function(){
-        //Grab html variables
-        fullName = document.getElementById('firstname').value + " " + document.getElementById('lastname').value;
-        awardTitle = document.getElementById('award').value;
-        sideText = document.getElementById('addtext').value;
-        convergeLogoCheck = document.getElementById('convergelogo').checked;
-        profileImg = document.getElementById('profileinput');
-        profilePicCheck = document.getElementById('profilepic').checked;
+    //Grab html variables
+    fullName = document.getElementById('firstname').value + " " + document.getElementById('lastname').value;
+    awardTitle = document.getElementById('award').value;
+    sideText = document.getElementById('addtext').value;
+    convergeLogoCheck = document.getElementById('convergelogo').checked;
+    profileImg = document.getElementById('profileinput');
+    profilePicCheck = document.getElementById('profilepic').checked;
+    backgroundImg = document.getElementById('backgroundChoice').value;
+    backgroundInput = document.getElementById('backgroundUploadInput');
 
-        //Draw canvas w/ images
-        drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
-
-        insertText(canvas, fullName, awardTitle, sideText);
+    //if background is pre-loaded or uploaded
+    if(backgroundImg != 'Upload'){
+        let img = new Image;
+        img.src = backgroundImg;
+        //For some reason, taking img out of this conditional did not work. Maybe declaring a var "new" only works locally?
+        img.onload = function(){    
+            //Draw canvas w/ images
+            drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
+            insertText(canvas, fullName, awardTitle, sideText);
+        }
+    } else {
+        if(backgroundInput.value != ''){
+            var backgroundReader = new FileReader();
+            backgroundReader.onload = function(){
+                let img = new Image;
+                img.src = backgroundReader.result;
+                img.addEventListener("load", () => {
+                    //Draw canvas w/ images
+                    drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
+                    insertText(canvas, fullName, awardTitle, sideText);
+                });
+            }
+            backgroundReader.readAsDataURL(backgroundInput.files[0]);
+        }
     }
 }
 
@@ -153,6 +170,18 @@ function init () {
     window.onload = function(){
         generateBanner();
     }
+}
+
+function backgroundpicfunction(){
+    var checkBackgroundUpload = document.getElementById('backgroundChoice').value;
+    var backgroundInput = document.getElementById('backgroundUpload');
+    if(checkBackgroundUpload == 'Upload'){
+        backgroundInput.style.display = "block";
+    }
+    else{
+        backgroundInput.style.display = "none";
+    }
+    generateBanner();
 }
 
 //Display the "choose file" for the profile picture checked

@@ -74,6 +74,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="background">Select Background</label>
+                                <select name="background" id="backgroundChoice" onchange='backgroundpicfunction()' class="form-control is-invalid" required>
+                                    <option value=".\imgs\SiemensBackground3.jpg">Siemens Fade</option>
+                                    <option value=".\imgs\SiemensBackground4.png">Siemens Globe</option>
+                                    <option value="Upload">(Upload)</option>
+                                </select>
+                    </div>
+                    <div class="form-group">
+                        <div id = "backgroundUpload" style="display:none;">
+                            <label for="backgroundUploadInput"> Choose a picture to use for banner background </label>
+                            <input type="file" id="backgroundUploadInput" accept="image/*" name="backgroundUploadInput" onchange='generateBanner()' >
+                        </div>
+                    </div>
                     <div class="form-check">
                         <input type="checkbox" id="convergelogo" onchange='generateBanner()' class="form-check-input">
                         <label for="convergelogo" class="form-check-label">Add Converge logo</label>
@@ -103,7 +117,7 @@
                 </div>
                 </form>
             </td>
-            <td>
+            <td id="banner-td">
                 <p style='text-align:center;'>
                     <canvas id="banner-canvas" title="Right click -> &quot;Save image as...&quot;"></canvas>
                 </p>
