@@ -114,6 +114,7 @@ function insertText(canvas, fullName, awardTitle, sideText){
 }
 
 function generateBanner () {
+
     // Converge Logo
     let convergeLogo = new Image;
     convergeLogo.src = ".\\imgs\\siemensConvergeLogo.jpg"
@@ -122,39 +123,42 @@ function generateBanner () {
     let imgLogo = new Image;
     imgLogo.src = ".\\imgs\\siemensLogo.jpg"
 
-    //Grab html variables
-    fullName = document.getElementById('firstname').value + " " + document.getElementById('lastname').value;
-    awardTitle = document.getElementById('award').value;
-    sideText = document.getElementById('addtext').value;
-    convergeLogoCheck = document.getElementById('convergelogo').checked;
-    profileImg = document.getElementById('profileinput');
-    profilePicCheck = document.getElementById('profilepic').checked;
-    backgroundImg = document.getElementById('backgroundChoice').value;
-    backgroundInput = document.getElementById('backgroundUploadInput');
+    // Only execute after Siemens logo is up
+    imgLogo.onload = function(){
+        //Grab html variables
+        fullName = document.getElementById('firstname').value + " " + document.getElementById('lastname').value;
+        awardTitle = document.getElementById('award').value;
+        sideText = document.getElementById('addtext').value;
+        convergeLogoCheck = document.getElementById('convergelogo').checked;
+        profileImg = document.getElementById('profileinput');
+        profilePicCheck = document.getElementById('profilepic').checked;
+        backgroundImg = document.getElementById('backgroundChoice').value;
+        backgroundInput = document.getElementById('backgroundUploadInput');
 
-    //if background is pre-loaded or uploaded
-    if(backgroundImg != 'Upload'){
-        let img = new Image;
-        img.src = backgroundImg;
-        //For some reason, taking img out of this conditional did not work. Maybe declaring a var "new" only works locally?
-        img.onload = function(){    
-            //Draw canvas w/ images
-            drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
-            insertText(canvas, fullName, awardTitle, sideText);
-        }
-    } else {
-        if(backgroundInput.value != ''){
-            var backgroundReader = new FileReader();
-            backgroundReader.onload = function(){
-                let img = new Image;
-                img.src = backgroundReader.result;
-                img.addEventListener("load", () => {
-                    //Draw canvas w/ images
-                    drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
-                    insertText(canvas, fullName, awardTitle, sideText);
-                });
+        //if background is pre-loaded or uploaded
+        if(backgroundImg != 'Upload'){
+            let img = new Image;
+            img.src = backgroundImg;
+            //For some reason, taking img out of this conditional did not work. Maybe declaring a var "new" only works locally?
+            img.onload = function(){    
+                //Draw canvas w/ images
+                drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
+                insertText(canvas, fullName, awardTitle, sideText);
             }
-            backgroundReader.readAsDataURL(backgroundInput.files[0]);
+        } else {
+            if(backgroundInput.value != ''){
+                var backgroundReader = new FileReader();
+                backgroundReader.onload = function(){
+                    let img = new Image;
+                    img.src = backgroundReader.result;
+                    img.addEventListener("load", () => {
+                        //Draw canvas w/ images
+                        drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
+                        insertText(canvas, fullName, awardTitle, sideText);
+                    });
+                }
+                backgroundReader.readAsDataURL(backgroundInput.files[0]);
+            }
         }
     }
 }
