@@ -62,14 +62,14 @@ function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, prof
 
 function insertText(canvas, fullName, awardTitle, sideText){
     //Text style initially
-    const fontSizeAward = canvas.width * .04;
+    const fontSizeAward = canvas.width * .035;
     const fontSizeName = canvas.width * .04;
     const fontSizeAdd = canvas.width * .025;
     ctx.fillStyle = 'white';
     ctx.textAlign = 'center';
 
     // Text font settings for Award
-    ctx.font = fontSizeAward + 'px Trocchi';
+    ctx.font = fontSizeAward + 'px Open Sans, Arial';
     ctx.lineWidth = fontSizeAward / 20;
     ctx.textAlign = "start";
 
@@ -79,14 +79,14 @@ function insertText(canvas, fullName, awardTitle, sideText){
 
     // Text font settings for name
     ctx.textBaseline = 'middle';
-    ctx.font = fontSizeName + 'px Trocchi';
+    ctx.font = fontSizeName + 'px Open Sans, Arial';
     ctx.lineWidth = fontSizeName / 20;
 
     // Draw Name
     ctx.fillText(fullName, canvas.width / 3, canvas.height/2.2, canvas.width);
 
     // Text font settings for additional text
-    ctx.font = fontSizeAdd + 'px Trocchi';
+    ctx.font = fontSizeAdd + 'px Open Sans, Arial';
     ctx.lineWidth = fontSizeAdd / 20;
 
     //Draw Additional Text
