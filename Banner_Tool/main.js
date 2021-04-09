@@ -1,6 +1,6 @@
 let fullName, sideText, fullNameSizeInput, sideTextSizeInput, imageInput, generateBtn, canvas, ctx;
 
-function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck){
+function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck, profilePicShape){
     // Size canvas to image
     canvas.width = 792;
     canvas.height = 198;
@@ -39,20 +39,44 @@ function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, prof
             profileImgReader.src = reader.result;
             profileImgReader.addEventListener("load", () => {
                 // Resize picture to fit canvas
+                let ratio = 0;
                 if(profileImgReader.width > 150 || profileImgReader.height > 130){
                     if(profileImgReader.width > profileImgReader.height){
                         var profileWidthOld = profileImgReader.width;
                         profileImgReader.width = 150;
                         profileImgReader.height = profileImgReader.height * profileImgReader.width / profileWidthOld;
+                        ratio = 1;
                     }
                     else{
                         var profileHeightOld = profileImgReader.height;
                         profileImgReader.height = 130;
                         profileImgReader.width = profileImgReader.width * profileImgReader.height / profileHeightOld;
+                        ratio = 0;
                     }
                 }
-                // Draw Image and auto-center it
-                ctx.drawImage(profileImgReader, profileImgFrameHor / 2 - profileImgReader.width / 2, canvas.height / 2 + ((canvas.height - profileImgFrameVert) / 2)  - profileImgReader.height / 2 , profileImgReader.width, profileImgReader.height);
+                // Check if heigt or width of picture is larger and create circle with variable radius
+                if(!profilePicShape){
+                    if(ratio == 0){
+                        ctx.arc(profileImgFrameHor / 2, canvas.height / 2 + ((canvas.height - profileImgFrameVert) / 2), profileImgReader.width / 2, 0, Math.PI * 2, true);
+                    }
+                    else{
+                        ctx.arc(profileImgFrameHor / 2, canvas.height / 2 + ((canvas.height - profileImgFrameVert) / 2), profileImgReader.height / 2, 0, Math.PI * 2, true);
+                    }
+                    ctx.clip();
+                    // Draw Image and auto-center it
+                    ctx.drawImage(profileImgReader, profileImgFrameHor / 2 - profileImgReader.width / 2, canvas.height / 2 + ((canvas.height - profileImgFrameVert) / 2)  - profileImgReader.height / 2 , profileImgReader.width, profileImgReader.height);
+                    // Create the border around the circle
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 3;
+                    ctx.arc(profileImgFrameHor / 2, canvas.height / 2 + ((canvas.height - profileImgFrameVert) / 2), profileImgReader.width / 2 + ctx.lineWidth, 0, Math.PI * 2, true);
+                    ctx.stroke();
+                }
+                else{
+                    ctx.drawImage(profileImgReader, profileImgFrameHor / 2 - profileImgReader.width / 2, canvas.height / 2 + ((canvas.height - profileImgFrameVert) / 2)  - profileImgReader.height / 2 , profileImgReader.width, profileImgReader.height);
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = '2';
+                    ctx.strokeRect(profileImgFrameHor / 2 - profileImgReader.width / 2, canvas.height / 2 + ((canvas.height - profileImgFrameVert) / 2)  - profileImgReader.height / 2 , profileImgReader.width, profileImgReader.height);
+                }
             });
         }
         // Load reader file
@@ -132,6 +156,7 @@ function generateBanner () {
         convergeLogoCheck = document.getElementById('convergelogo').checked;
         profileImg = document.getElementById('profileinput');
         profilePicCheck = document.getElementById('profilepic').checked;
+        profilePicShape = document.getElementById('profilePicShapeRect').checked;
         backgroundImg = document.getElementById('backgroundChoice').value;
         backgroundInput = document.getElementById('backgroundUploadInput');
 
@@ -142,7 +167,7 @@ function generateBanner () {
             //For some reason, taking img out of this conditional did not work. Maybe declaring a var "new" only works locally?
             img.onload = function(){    
                 //Draw canvas w/ images
-                drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
+                drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck, profilePicShape);
                 insertText(canvas, fullName, awardTitle, sideText);
             }
         } else {
@@ -153,7 +178,7 @@ function generateBanner () {
                     img.src = backgroundReader.result;
                     img.addEventListener("load", () => {
                         //Draw canvas w/ images
-                        drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck);
+                        drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck, profilePicShape);
                         insertText(canvas, fullName, awardTitle, sideText);
                     });
                 }

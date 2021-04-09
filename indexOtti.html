@@ -100,7 +100,23 @@
                         <input type="checkbox" id="profilepic" class="form-check-input" name="profilepic" onchange= 'profilepicfunction();'>
                         <label for="profilepic" class="form-check-label">Add profile pic</label>
                         <div id = "profilepicinput" style="display:none;">
-                            <label for="addtext"> Choose a picture for the profile </label>
+                            <div style="width:80%;">
+                                <table>
+                                    <tr style='text-align:center;'>
+                                        <td>
+                                            <label for='profilePicShape'>Circular Image<br/>
+                                                <input type='radio' id='profilePicShapeCirc' name='profilePicShape' onchange='generateBanner()' checked='checked'>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label for='profilePicShape'>Rectangular Image<br/>
+                                                <input type='radio' id='profilePicShapeRect' name='profilePicShape' onchange='generateBanner()'>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <label for="profileinput"> Choose a picture for the profile </label>
                             <input type="file" id="profileinput" accept="image/*" name="profileinput" onchange='generateBanner()' >
                         </div>
                     </div>
