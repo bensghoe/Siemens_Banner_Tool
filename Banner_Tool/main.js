@@ -84,7 +84,7 @@ function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, prof
     }
 }
 
-function insertText(canvas, fullName, awardTitle, sideText){
+function insertText(canvas, fullName, awardTitle, sideText, profilePicCheck){
     //Text style initially
     const fontSizeAward = canvas.width * .035;
     const fontSizeName = canvas.width * .04;
@@ -98,8 +98,13 @@ function insertText(canvas, fullName, awardTitle, sideText){
     ctx.textAlign = "start";
 
     // Draw Award
+    // Move text if profile picture is or is not present
     ctx.textBaseline = 'top';
-    ctx.fillText(awardTitle, 10, 10, canvas.width);
+    if(profilePicCheck){
+        ctx.fillText(awardTitle, 10, 10, canvas.width); 
+    }else{
+        ctx.fillText(awardTitle, 30, 30, canvas.width);
+    }
 
     // Text font settings for name
     ctx.textBaseline = 'middle';
@@ -107,7 +112,12 @@ function insertText(canvas, fullName, awardTitle, sideText){
     ctx.lineWidth = fontSizeName / 20;
 
     // Draw Name
-    ctx.fillText(fullName, canvas.width / 3, canvas.height/2.2, canvas.width);
+    // Move text if profile picture is or is not present
+    if(profilePicCheck){
+        ctx.fillText(fullName, canvas.width / 3, canvas.height/2.2, canvas.width);
+    }else{
+        ctx.fillText(fullName, canvas.width / 3.5, canvas.height/2, canvas.width);
+    }
 
     // Text font settings for additional text
     ctx.font = fontSizeAdd + 'px Open Sans, Arial';
@@ -126,7 +136,13 @@ function insertText(canvas, fullName, awardTitle, sideText){
             charsErrorLine = i + 1;
         }
         else{
-            ctx.fillText(t, canvas.width / 3, canvas.height/2.2 + i * fontSizeAdd + fontSizeName, canvas.width);
+            // Move text if profile picture is or is not present
+            if(profilePicCheck){
+                ctx.fillText(t, canvas.width / 3, canvas.height/2.2 + i * fontSizeAdd + fontSizeName, canvas.width);
+            }
+            else{
+                ctx.fillText(t, canvas.width / 3.5, canvas.height/2 + i * fontSizeAdd + fontSizeName, canvas.width);
+            }
         }
     });
     if(rowsError){
@@ -168,7 +184,7 @@ function generateBanner () {
             img.onload = function(){    
                 //Draw canvas w/ images
                 drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck, profilePicShape);
-                insertText(canvas, fullName, awardTitle, sideText);
+                insertText(canvas, fullName, awardTitle, sideText, profilePicCheck);
             }
         } else {
             if(backgroundInput.value != ''){
@@ -179,7 +195,7 @@ function generateBanner () {
                     img.addEventListener("load", () => {
                         //Draw canvas w/ images
                         drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck, profilePicShape);
-                        insertText(canvas, fullName, awardTitle, sideText);
+                        insertText(canvas, fullName, awardTitle, sideText, profilePicCheck);
                     });
                 }
                 backgroundReader.readAsDataURL(backgroundInput.files[0]);
