@@ -200,6 +200,10 @@ function generateBanner () {
                 }
                 backgroundReader.readAsDataURL(backgroundInput.files[0]);
             }
+            else{
+                // Bring up file explorer for upload
+                backgroundInput.click();
+            }
         }
     }
 }
@@ -245,6 +249,18 @@ var addprofileinput = document.getElementById('profilepicinput')
 downloadImg = function(el){
     var banner = canvas.toDataURL("image/png");
     el.href = banner;
+}
+
+function collapsibleContent(el){
+    content = el.nextElementSibling;
+    console.log(content.tagName);
+    if(content.style.visibility === 'block' || content.style.display === 'table'){
+        content.style.display = 'none';
+    } else {
+        if(content.tagName == 'TABLE') content.style.display = 'table';
+        else content.style.display = 'block';
+        el.scrollIntoView(true);
+    }
 }
 
 init();

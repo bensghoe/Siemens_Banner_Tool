@@ -20,6 +20,7 @@ table{
 }
 
 body{
+    padding-bottom:20px;
     color: white;
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(46,149,125,1) 70%, rgba(0,212,255,1) 100%);
@@ -106,3 +107,51 @@ body{
     input[type=radio] {
         display: inline;
       }
+
+.instructions{
+    margin-top:5%;
+    text-align:center;
+}
+
+.stepNo {
+    text-align:center;
+}
+
+.stepImgs{
+    margin-left:auto;
+    margin-right:auto;
+    display: block;
+    margin-top: 10px;
+}
+
+#collapsibleBtns{
+    text-align:center;
+    width:100%;
+    margin:0 auto;
+}
+
+.collapsible:hover{
+    background-color:rgba(255,255,255, 0.3);
+    color:black;
+}
+
+.collapsible{
+    text-align:center;
+    margin:30px;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color:white;
+    width:25%;
+}
+
+.content{
+    display: none;
+    overflow:hidden;
+    max-height:0;
+    text-align:center;
+    transition: max-height 500ms ease-out;
+}

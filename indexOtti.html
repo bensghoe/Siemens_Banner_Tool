@@ -13,6 +13,14 @@
 
 <body>
     <h1 class="text-center">Siemens Banner Tool</h1>
+    <div style='text-align:center;'>
+        <span>Welcome to the Siemens Banner tool!</span>
+        <br/>
+        <span>The intention for this tool is to build banners for your social media accounts. This one is specifically made for LinkedIn, but feel free to use it elsewhere.</span>
+        <br/>
+        <span>For instructions on how to add this banner to your linkedIn, scroll down to the bottom of the page.</span>
+    </div>
+    <br/>
     <table>
         <tr style="text-align:center; font-size:24px;">
             <td>
@@ -141,7 +149,46 @@
                 </p>
             </td>
         </tr>
-    </table>
+        </table>
+        <div id='collapsibleBtns'>
+            <button type='button' class='collapsible' onclick='collapsibleContent(this)'>Show LinkedIn Instructions</button>
+            <table class='content'>
+                <tr>
+                    <td>
+                        <div class='instructions'>
+                            <h2 class='stepNo'>Step 1</h2>
+                            Firstly, go to your linkedIn profile page and click the pencil in the top-right corner
+                            <br>
+                            of your banner to edit.
+                            <br>
+                            <img class='stepImgs' src='.\imgs\stepOne.png' style='height:200px' />
+                        </div>
+                        <div class='instructions'>
+                            <h2 class='stepNo'>Step 2</h2>
+                            Now a window should pop up, click the "Change photo" button to upload a new banner.
+                            <br>
+                            <img class='stepImgs' src='.\imgs\stepTWo.png' style='height:200px' />
+                        </div>
+                    </td>
+                    <td>
+                        <div class='instructions'>
+                            <h2 class='stepNo'>Step 3</h2>
+                            Now click the "Upload photo" button select your banner from wherever you downloaded it
+                            <br>
+                            (most likely downloads folder).
+                            <br>
+                            <img class='stepImgs' src='.\imgs\stepThree.png' style='height:200px' />
+                        </div>
+                        <div class='instructions'>
+                            <h2 class='stepNo'>Step 4</h2>
+                            Finally click "Apply" at the bottom of the window.
+                            <br>
+                            <img class='stepImgs' src='.\imgs\stepFour.png' style='height:200px' />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
     <script src="Banner_Tool/main.js"></script>
 
 </body>
