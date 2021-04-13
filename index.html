@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
+    <meta charset="utf-8">
+    <link rel="icon" href="./imgs/favicon.ico">
+    <title>Simens Banner Tool</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <img class="logoheader" src="imgs\siemensLogo.jpg" alt="">
+
+    <h1 class="text-center"> Welcome to Siemens Banner Tool</h1>
+    <h4>
+        With this tool, you can customize a banner for all the award winners for personal or any professional use, for
+        platforms such as Linkedin <br /> (View examples and instructions below)
+    </h4>
+
+    <table>
+        <td>
+            <div>
+                <fieldset>
+                    <legend>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
+                            class="bi bi-pencil" viewBox="0 0 16 16" style="padding-right: 5px;">
+                            <path
+                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                        </svg>Editor
+                    </legend>
+
+                    <form action="" class="main-form needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="firstname">First Name</label>
+                                    <input type="text" name="firstname" onchange='generateBanner()' id="firstname"
+                                        class="form-control" required>
+                                    <div class="invalid-feedback"> Please enter a First Name</div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="lastname">Last Name</label>
+                                    <input type="text" name="lastname" onchange='generateBanner()' id="lastname"
+                                        class="form-control" required>
+                                    <div class="invalid-feedback"> Please enter a Last Name</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="typeofawards">Select Recognition Header</label>
+                            <select name="award" id="award" onchange='generateBanner()' class="form-control"
+                                required>
+                                <option>Siemens DISW</option>
+                                <option value="Excellence in Resource Team Contribution">Excellence in Resource Team
+                                    Contribution
+                                </option>
+                                <option value="Top Services Contributor">Top Services Contributor</option>
+                                <option value="Excellence in Project Execution">Excellence in Project Execution
+                                </option>
+                            </select>
+                            <div class="invalid-feedback"> Please Select an Award</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="addtext">Additional Text</label>
+                                    <textarea name="addtext" onchange='generateBanner()' id="addtext" wrap="hard"
+                                        class="form-control"></textarea>
+                                    <small class="form-text text-muted">
+                                        3 Rows Max
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="background">Select Background</label>
+                                    <select name="background" id="backgroundChoice" onchange='backgroundpicfunction()'
+                                        class="form-control" required>
+                                        <option value=".\imgs\SiemensBackgroundNodes.png">Siemens Nodes</option>
+                                        <option value=".\imgs\SiemensBackground4.png">Siemens Globe</option>
+                                        <option value="Upload">(Upload)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div id="backgroundUpload" style="display:none;">
+                                <label for="backgroundUploadInput"> Choose a picture to use for banner background
+                                </label>
+                                <input type="file" id="backgroundUploadInput" accept="image/*"
+                                    name="backgroundUploadInput" onchange='generateBanner()'>
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" id="convergelogo" onchange='generateBanner()'
+                                class="form-check-input">
+                            <label for="convergelogo" class="form-check-label">Add Converge logo</label>
+                            <small class="form-text text-muted">
+                                Optional
+                            </small>
+                            <br />
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="profilepic" class="form-check-input" name="profilepic"
+                                onchange='profilepicfunction();'>
+                            <label for="profilepic" class="form-check-label">Add profile pic</label>
+                            <small class="form-text text-muted">
+                                Optional
+                            </small>
+                            <div id="profilepicinput" style="display:none;">
+                                <div style="width:80%;">
+                                    <table>
+                                        <tr style='text-align:center;'>
+                                            <td>
+                                                <label for='profilePicShape'>Circular Image<br />
+                                                    <input type='radio' id='profilePicShapeCirc' name='profilePicShape'
+                                                        onchange='generateBanner()' checked='checked'>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label for='profilePicShape'>Rectangular Image<br />
+                                                    <input type='radio' id='profilePicShapeRect' name='profilePicShape'
+                                                        onchange='generateBanner()'>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <label for="profileinput"> Choose a picture for the profile </label>
+                                <input type="file" id="profileinput" accept="image/*" name="profileinput"
+                                    onchange='generateBanner()'>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="submitbtn form-control">
+                            <a id="generate-btn" download='myBannerLinkedIn.png' class="btn btn-primary" href=''
+                                onclick='downloadImg(this);' type='button'> Download </a>
+                        </div>
+
+                    </form>
+                </fieldset>
+            </div>
+        </td>
+        <td id="banner-td">
+            <p style='text-align:center;'>
+                <canvas id="banner-canvas"></canvas>
+                <canvas id='banner-canvas-twitter'></canvas>
+                <canvas id='banner-canvas-facebook'></canvas>
+            </p>
+            <div class="infobtn row">
+                <div class="col linkedincollapsible">
+                    <button type='button' class="btn btn-secondary btn-lg collapsible"
+                        onclick='collapsibleContent("collapsibleBtnsTable")'>Show LinkedIn Instructions</button>
+                </div>
+                <div class="col linkedincollapsible">
+                    <button type='button' class="btn btn-secondary btn-lg collapsible"
+                        onclick='collapsibleContent("bannerexample")'>Show Banner Examples</button>
+                </div>
+            </div>
+        </td>
+        </tr>
+    </table>
+
+    <div id='collapsibleBtns'>
+        <table class='content' id="collapsibleBtnsTable">
+            <tr>
+                <td style='width:50%;'>
+                    <div class='instructions'>
+                        <h2 class='stepNo'>Step 1</h2>
+                        Firstly, go to your linkedIn profile page and click the icon in the top-right corner
+                        <br>
+                        of your banner to edit.
+                        <br>
+                        <img class='stepImgs' src='.\imgs\stepOne.png' style='height:200px' />
+                    </div>
+                    <div class='instructions'>
+                        <h2 class='stepNo'>Step 2</h2>
+                        Now click the "Upload photo" button select your banner from wherever you downloaded it
+                        <br>
+                        (most likely downloads folder).
+                        <br>
+                        <img class='stepImgs' src='.\imgs\stepThree.png' style='height:200px' />
+                    </div>
+                </td>
+                <td style='vertical-align:top;'>
+                    <div class='instructions'>
+                        <h2 class='stepNo'>Step 3</h2>
+                        Finally click "Apply" at the bottom of the window.
+                        <br>
+                        <img class='stepImgs' src='.\imgs\stepFour.png' style='height:200px' />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <table class="content" id="bannerexample">
+        <tr>
+            <td>
+                <h3>
+                    Banner Examples
+                </h3>
+                <img class="bannernoimage" src="imgs\IanPackBannerNoImage.png" alt=""> <br />
+                <br />
+                <img class="bannerexample" src="imgs\IanPackBanner.png" alt="">
+            </td>
+
+            <td>
+                <h3>
+                    Banner example on a Linkedin profile
+                </h3>
+                <img class="linkedinsc" src="imgs\Linkedinexample.png" alt="">
+            </td>
+        </tr>
+    </table>
+
+    <script src="Banner_Tool/generateBannerFacebook.js"></script>
+    <script src="Banner_Tool/generateBannerTwitter.js"></script>
+    <script src="Banner_Tool/main.js"></script>
+
+</body>
+
+</html>

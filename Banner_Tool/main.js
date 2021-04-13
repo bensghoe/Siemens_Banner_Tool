@@ -1,4 +1,7 @@
+//Declarations
 let fullName, sideText, fullNameSizeInput, sideTextSizeInput, imageInput, generateBtn, canvas, ctx;
+var form = document.querySelector('#generate-btn');
+
 
 function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck, profilePicShape){
     // Size canvas to image
@@ -12,6 +15,8 @@ function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, prof
     // Size convergeLogo
     convergeLogo.width = 160;
     convergeLogo.height = 60;
+
+    const logoBuffer = canvas.height * .06;
  
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -20,11 +25,11 @@ function drawCanvas (canvas, img, imgLogo, convergeLogo, convergeLogoCheck, prof
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
     // Draw Logo
-    ctx.drawImage(imgLogo, canvas.width - (imgLogo.width + 12), 12, imgLogo.width, imgLogo.height);
+    ctx.drawImage(imgLogo, canvas.width - (imgLogo.width + logoBuffer), logoBuffer, imgLogo.width, imgLogo.height);
 
     // Draw converge logo if requested
     if(convergeLogoCheck == true){
-        ctx.drawImage(convergeLogo, canvas.width - (convergeLogo.width + 12), canvas.height - (convergeLogo.height + 12), convergeLogo.width, convergeLogo.height);
+        ctx.drawImage(convergeLogo, canvas.width - (convergeLogo.width + logoBuffer), canvas.height - (convergeLogo.height + logoBuffer), convergeLogo.width, convergeLogo.height);
     }
 
     // Canvas height - award font
@@ -89,6 +94,10 @@ function insertText(canvas, fullName, awardTitle, sideText, profilePicCheck){
     const fontSizeAward = canvas.width * .035;
     const fontSizeName = canvas.width * .04;
     const fontSizeAdd = canvas.width * .025;
+    
+    const awardSpacePic = canvas.height * .05;
+    const awardSpaceNoPic = canvas.height * .15;
+
     ctx.fillStyle = 'white';
     ctx.textAlign = 'center';
 
@@ -101,9 +110,9 @@ function insertText(canvas, fullName, awardTitle, sideText, profilePicCheck){
     // Move text if profile picture is or is not present
     ctx.textBaseline = 'top';
     if(profilePicCheck){
-        ctx.fillText(awardTitle, 10, 10, canvas.width); 
+        ctx.fillText(awardTitle, awardSpacePic, awardSpacePic, canvas.width); 
     }else{
-        ctx.fillText(awardTitle, 30, 30, canvas.width);
+        ctx.fillText(awardTitle, awardSpaceNoPic, awardSpaceNoPic, canvas.width);
     }
 
     // Text font settings for name
@@ -146,15 +155,17 @@ function insertText(canvas, fullName, awardTitle, sideText, profilePicCheck){
         }
     });
     if(rowsError){
-        alert("Too many additional text rows");
+        alert("Too many additional text rows (limit 3)");
     }
     if(charsError){
-        alert("row " + charsErrorLine + " exceed character limit");
+        alert("row " + charsErrorLine + " exceeds the character limit of 31 characters");
     }
 }
 
 function generateBanner () {
 
+    generateBannerFacebook();
+    generateBannerTwitter();
     // Converge Logo
     let convergeLogo = new Image;
     convergeLogo.src = ".\\imgs\\siemensConvergeLogo.jpg"
@@ -199,10 +210,14 @@ function generateBanner () {
                     });
                 }
                 backgroundReader.readAsDataURL(backgroundInput.files[0]);
-            }
-            else{
-                // Bring up file explorer for upload
-                backgroundInput.click();
+            } else {
+                let img = new Image;
+                img.src = ".\\imgs\\SiemensBackgroundNodes.png";
+                img.addEventListener("load", () => {
+                    //Draw canvas w/ images
+                    drawCanvas(canvas, img, imgLogo, convergeLogo, convergeLogoCheck, profileImg, profilePicCheck, profilePicShape);
+                    insertText(canvas, fullName, awardTitle, sideText, profilePicCheck);
+                });
             }
         }
     }
@@ -221,14 +236,17 @@ function init () {
     }
 }
 
+// Backgound picture upload
 function backgroundpicfunction(){
     var checkBackgroundUpload = document.getElementById('backgroundChoice').value;
-    var backgroundInput = document.getElementById('backgroundUpload');
+    var backgroundInputBlock = document.getElementById('backgroundUpload');
+    var backgroundInput = document.getElementById('backgroundUploadInput');
     if(checkBackgroundUpload == 'Upload'){
-        backgroundInput.style.display = "block";
+        backgroundInputBlock.style.display = "block";
+        backgroundInput.click();
     }
     else{
-        backgroundInput.style.display = "none";
+        backgroundInputBlock.style.display = "none";
     }
     generateBanner();
 }
@@ -246,21 +264,38 @@ var addprofileinput = document.getElementById('profilepicinput')
     generateBanner();
 }
 
+//Download the image as PNG
 downloadImg = function(el){
     var banner = canvas.toDataURL("image/png");
     el.href = banner;
 }
 
-function collapsibleContent(el){
-    content = el.nextElementSibling;
-    console.log(content.tagName);
-    if(content.style.visibility === 'block' || content.style.display === 'table'){
+// Use the linkedin button to collapse the content (button line 176)
+function collapsibleContent(contentId){
+    content = document.getElementById(contentId);
+    if(content.style.display === 'block' || content.style.display === 'table'){
         content.style.display = 'none';
     } else {
         if(content.tagName == 'TABLE') content.style.display = 'table';
         else content.style.display = 'block';
-        el.scrollIntoView(true);
+        content.scrollIntoView(true);
     }
+
+    if (contentId == 'collapsibleBtnsTable') document.getElementById('bannerexample').style.display ='none';
+    else document.getElementById('collapsibleBtnsTable').style.display ='none';
 }
+
+
+//Evenlistner to not have the browser do the validation
+form.addEventListener('click', function (event) {
+    if (form.checkValidity() == false) {
+        // No request can be sent
+        event.preventDefault();
+        // When you are not sending the datawith an ajax request
+        event.stopPropagation();
+    }
+    form.classList.add('was-validated')
+})
+
 
 init();
